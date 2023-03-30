@@ -26,21 +26,18 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private CartRepository cartRepository;
     @Autowired
+    private OrderLineRepository orderLineRepository;
+    @Autowired
     private OrderLineService orderLineService;
 
 
     @Override
-    public void addOrderLineToCart(OrderLine orderLine) {
-        OrderLine orderLine = null;
-        try {
-            orderLine = orderLineService.findOrderLineById(orderLine.getOrderLine().getId());
-        } catch (OrderLineNotFoundException e){
-            throw new RuntimeException(e);
-        }
-        orderLine.setOrderLine(orderLine);
-        orderLine.setActive(true);
-        orderLineRepository.save(orderLine);
+    public void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException {
+        OrderLine existingOrderLine = orderLineService.findOrderLineById(orderLine.getId());
+        existingOrderLine.setActive(true);
+        orderLineRepository.save(existingOrderLine);
     }
+
 
     @Override
     public void removeOrderLineFromCart(OrderLine orderLine) {

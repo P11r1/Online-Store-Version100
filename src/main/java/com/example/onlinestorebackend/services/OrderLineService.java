@@ -1,7 +1,9 @@
 package com.example.onlinestorebackend.services;
 
 import com.example.onlinestorebackend.exceptions.OrderLineNotFoundException;
+import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
 import com.example.onlinestorebackend.models.OrderLine;
+import com.example.onlinestorebackend.models.Product;
 
 import java.util.List;
 
@@ -10,6 +12,13 @@ import java.util.List;
  * @Date 30/03/2023
  */
 public interface OrderLineService {
+    /**
+     * To add a Product To OrderLine
+     *
+     * @param product Product
+     */
+    void addProductToOrderLine(Product product) throws ProductNotFoundException;
+
     /**
      * To create a new orderLine
      *
