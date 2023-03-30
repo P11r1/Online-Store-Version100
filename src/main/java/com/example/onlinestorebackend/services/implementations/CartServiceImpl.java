@@ -2,6 +2,8 @@ package com.example.onlinestorebackend.services.implementations;
 
 import com.example.onlinestorebackend.exceptions.CartNotFoundException;
 import com.example.onlinestorebackend.models.Cart;
+import com.example.onlinestorebackend.models.Product;
+import com.example.onlinestorebackend.models.User;
 import com.example.onlinestorebackend.repositories.CartRepository;
 import com.example.onlinestorebackend.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,21 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Override
+    public Cart addItemToCart(Product product, int quantity, User user) {
+        Cart cart = user.getCart();
+    }
+
+    @Override
+    public Cart updateItemInCart(Product product, int quantity, User user) {
+        return null;
+    }
+
+    @Override
+    public Cart deleteItemFromCart(Product product, User user) {
+        return null;
+    }
 
     @Override
     public List<Cart> findAllCarts() {

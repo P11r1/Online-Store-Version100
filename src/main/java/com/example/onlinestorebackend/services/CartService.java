@@ -2,6 +2,8 @@ package com.example.onlinestorebackend.services;
 
 import com.example.onlinestorebackend.exceptions.CartNotFoundException;
 import com.example.onlinestorebackend.models.Cart;
+import com.example.onlinestorebackend.models.Product;
+import com.example.onlinestorebackend.models.User;
 
 import java.util.List;
 
@@ -11,13 +13,32 @@ import java.util.List;
  */
 public interface CartService {
 
+    Cart addItemToCart(Product product, int quantity, User user);
+
+    Cart updateItemInCart(Product product, int quantity, User user);
+
+    Cart deleteItemFromCart(Product product, User user);
+
+
+//    /**
+//     *
+//     * @return List of products
+//     */
+//    List<Product> getProductsToCart();
+//
+//    /**
+//     * To get Product price
+//     *
+//     * @param product Product
+//     */
+//    void getProductPrice(Product product);
+
     /**
      * To find all carts
      *
      * @return list of Cart
      */
     List<Cart> findAllCarts();
-
 
     /**
      * To create a new cart
@@ -36,6 +57,7 @@ public interface CartService {
 
     /**
      * To update an existing Cart
+     *
      * @param id Id
      * @return Cart
      */
@@ -43,12 +65,14 @@ public interface CartService {
 
     /**
      * To delete cart by id
+     *
      * @param id Id
      */
     void deleteCartById(Long id) throws CartNotFoundException;
 
     /**
      * To restore cart by id
+     *
      * @param id Id
      */
     void restoreCartById(Long id) throws CartNotFoundException;
