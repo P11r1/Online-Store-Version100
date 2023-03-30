@@ -1,11 +1,13 @@
 package com.example.onlinestorebackend.services.implementations;
 
 import com.example.onlinestorebackend.exceptions.CartNotFoundException;
-import com.example.onlinestorebackend.models.Cart;
-import com.example.onlinestorebackend.models.Product;
-import com.example.onlinestorebackend.models.User;
+import com.example.onlinestorebackend.exceptions.CategoryNotFoundException;
+import com.example.onlinestorebackend.exceptions.OrderLineNotFoundException;
+import com.example.onlinestorebackend.models.*;
 import com.example.onlinestorebackend.repositories.CartRepository;
+import com.example.onlinestorebackend.repositories.OrderLineRepository;
 import com.example.onlinestorebackend.services.CartService;
+import com.example.onlinestorebackend.services.OrderLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,20 +25,26 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private OrderLineService orderLineService;
+
 
     @Override
-    public Cart addItemToCart(Product product, int quantity, User user) {
-        Cart cart = user.getCart();
+    public void addOrderLineToCart(OrderLine orderLine) {
+        OrderLine orderLine = null;
+        try {
+            orderLine = orderLineService.findOrderLineById(orderLine.getOrderLine().getId());
+        } catch (OrderLineNotFoundException e){
+            throw new RuntimeException(e);
+        }
+        orderLine.setOrderLine(orderLine);
+        orderLine.setActive(true);
+        orderLineRepository.save(orderLine);
     }
 
     @Override
-    public Cart updateItemInCart(Product product, int quantity, User user) {
-        return null;
-    }
+    public void removeOrderLineFromCart(OrderLine orderLine) {
 
-    @Override
-    public Cart deleteItemFromCart(Product product, User user) {
-        return null;
     }
 
     @Override

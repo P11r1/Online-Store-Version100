@@ -69,8 +69,8 @@ public class OrderLineController {
     public String createOrderLine(Model model, @ModelAttribute("orderline") OrderLine orderLine, @ModelAttribute("product") Product product,
                                   @ModelAttribute("message") String message,
                                   @ModelAttribute("messageType") String messageType) {
-        model.addAttribute("orderlines",orderLineService.findAllOrderLines());
-        return "product/create-orderline";
+        model.addAttribute("products", productService.findAllProducts());
+        return "orderline/create-orderline";
     }
 
     // Called shen we press submit button in the create product form

@@ -2,6 +2,7 @@ package com.example.onlinestorebackend.services;
 
 import com.example.onlinestorebackend.exceptions.CartNotFoundException;
 import com.example.onlinestorebackend.models.Cart;
+import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
 import com.example.onlinestorebackend.models.User;
 
@@ -13,25 +14,19 @@ import java.util.List;
  */
 public interface CartService {
 
-    Cart addItemToCart(Product product, int quantity, User user);
+    /**
+     * To add OrderLine to the Cart
+     *
+     * @param orderLine OrderLine
+     */
+    void addOrderLineToCart(OrderLine orderLine);
 
-    Cart updateItemInCart(Product product, int quantity, User user);
-
-    Cart deleteItemFromCart(Product product, User user);
-
-
-//    /**
-//     *
-//     * @return List of products
-//     */
-//    List<Product> getProductsToCart();
-//
-//    /**
-//     * To get Product price
-//     *
-//     * @param product Product
-//     */
-//    void getProductPrice(Product product);
+    /**
+     * To remove OrderLine from the Cart
+     *
+     * @param orderLine OrderLine
+     */
+    void removeOrderLineFromCart(OrderLine orderLine);
 
     /**
      * To find all carts

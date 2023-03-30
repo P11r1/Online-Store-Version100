@@ -11,7 +11,7 @@ import java.util.Optional;
  * @Date 3/29/2023
  */
 @Repository
-public interface CartRepository extends JpaRepository<Cart,Long> {
+public interface CartRepository extends JpaRepository<Cart, Long> {
     Optional<Cart> findById(Long id);
 
 }
