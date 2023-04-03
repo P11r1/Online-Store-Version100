@@ -2,6 +2,7 @@ package com.example.onlinestorebackend.services.implementations;
 
 import com.example.onlinestorebackend.exceptions.OrderLineNotFoundException;
 import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
+import com.example.onlinestorebackend.models.Order;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
 import com.example.onlinestorebackend.repositories.OrderLineRepository;
@@ -30,17 +31,41 @@ public class OrderLineServiceImpl implements OrderLineService {
     @Autowired
     private ProductRepository productRepository;
 
-    @Override
-    public void addProductToOrderLine(Product product) throws ProductNotFoundException {
-        Product existingProduct = productService.findProductByTitle(product.getTitle());
-        existingProduct.setActive(true);
-        productRepository.save(existingProduct);
-    }
 
     @Override
     public void createOrderLine(OrderLine orderLine) {
         orderLine.setActive(true);
         orderLineRepository.save(orderLine);
+    }
+
+    @Override
+    public void createOrderLineByProduct(Product product) {
+        try {
+            OrderLine orderLine = findActiveOrderLineByProduct(product);
+            orderLine.setQtyOfProducts(orderLine.getQtyOfProducts() + 1);
+            orderLine.setProductPrice(product.getPrice() * orderLine.getQtyOfProducts());
+            orderLineRepository.saveAndFlush(orderLine);
+        } catch (RuntimeException exception) {
+            OrderLine orderLine = new OrderLine();
+            orderLine.setProduct(product);
+            orderLine.setQtyOfProducts(1L);
+            orderLine.setProductPrice(product.getPrice());
+            orderLine.setActive(true);
+            orderLineRepository.save(orderLine);
+        }
+    }
+
+    @Override
+    public OrderLine findActiveOrderLineByProduct(Product product) {
+
+        Optional<OrderLine> orderLineOptional = orderLineRepository.findAllByProduct(product).stream()
+                .filter(OrderLine::isActive)
+                .findFirst();
+
+        if (orderLineOptional.isEmpty()) {
+            throw new RuntimeException("OrderLine not found for given product");
+        }
+        return orderLineOptional.get();
     }
 
     @Override

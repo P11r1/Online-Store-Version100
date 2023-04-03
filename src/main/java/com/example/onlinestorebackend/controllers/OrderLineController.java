@@ -1,6 +1,7 @@
 package com.example.onlinestorebackend.controllers;
 
 import com.example.onlinestorebackend.exceptions.OrderLineNotFoundException;
+import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
 import com.example.onlinestorebackend.services.OrderLineService;
@@ -64,6 +65,19 @@ public class OrderLineController {
         }
     }
 
+
+    @GetMapping("/create-by-product/{productId}")
+    public String createOrderLineByProduct(@PathVariable Long productId, RedirectAttributes redirectAttributes) {
+        try {
+            Product product = productService.findProductById(productId);
+            orderLineService.createOrderLineByProduct(product);
+            redirectAttributes.addFlashAttribute("message", "Product added to the cart!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/product";
+        } catch (ProductNotFoundException e) {
+            return handleException(redirectAttributes, e);
+        }
+    }
     // To show create product form page
     @GetMapping("/create")
     public String createOrderLine(Model model, @ModelAttribute("orderline") OrderLine orderLine, @ModelAttribute("product") Product product,

@@ -12,12 +12,20 @@ import java.util.List;
  * @Date 30/03/2023
  */
 public interface OrderLineService {
+
     /**
-     * To add a Product To OrderLine
-     *
+     * To create OrderLine by Product
      * @param product Product
      */
-    void addProductToOrderLine(Product product) throws ProductNotFoundException;
+    void createOrderLineByProduct(Product product);
+
+    /**
+     * To find active OrderLine by Product
+     * @param product Product
+     * @return Product
+     */
+    OrderLine findActiveOrderLineByProduct(Product product);
+
 
     /**
      * To create a new orderLine

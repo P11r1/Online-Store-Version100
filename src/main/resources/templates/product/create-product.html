@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,16 +19,17 @@
 
         <form th:action="@{/product}" method="post" th:object="${product}">
             <div class="input-group">
-                <span class="input-group-text">Product Title</span>
+                <span class="input-group-text">Product name</span>
                 <input type="text" aria-label="title" class="form-control" th:field="*{title}" required>
             </div>
             <br/>
             <div class="input-group">
                 <span class="input-group-text">Description</span>
-                <input type="text" aria-label="description" class="form-control" th:field="*{description}" required>
+                <input type="text" aria-label="title" class="form-control" th:field="*{description}" required>
             </div>
+            <br/>
             <div class="input-group">
-                <span class="input-group-text">Inventory</span>
+                <span class="input-group-text">qty in stock</span>
                 <input type="number" aria-label="Inventory" class="form-control" th:field="*{inventory}" required>
             </div>
             <br/>
@@ -37,13 +38,19 @@
                 <input type="number" aria-label="Price" class="form-control" th:field="*{price}" required>
             </div>
             <br/>
-
+            <div class="input-group">
+                <span class="input-group-text">image_url</span>
+                <input type="text" aria-label="Price" class="form-control" th:field="*{thumbnailUrl}" >
+            </div>
+            <br/>
+            <!--            TODO CHECK IF WORKS        -->
             <div class="form-group mb-3">
                 <select class="form-select" aria-label="categories" th:field="*{category.id}">
-                    <option th:each="category: ${categories}" th:text="${category.name.replace('_', ' ')}" th:value="${category.id}"></option>
+                    <option th:each="category: ${categories}" th:text="${category.name.replace('_', ' ')}" th:value="${category.id}"  >
+                    </option>
                 </select>
             </div>
-            <a class="btn btn-outline-dark" href="/category" role="button">Cancel</a>
+            <a class="btn btn-outline-light" href="/product" role="button">Cancel</a>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
 

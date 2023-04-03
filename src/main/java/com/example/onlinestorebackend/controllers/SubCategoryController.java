@@ -60,11 +60,11 @@ public class SubCategoryController {
     }
 
     @PostMapping
-    public String createSubCategory(Category category,SubCategory subCategory, RedirectAttributes redirectAttributes) {
+    public String createSubCategory(Category category, SubCategory subCategory, RedirectAttributes redirectAttributes) {
 
         try {
             SubCategory searchSubCategory = subCategoryService.findSubCategoryByName(subCategory.getName());
-            redirectAttributes.addFlashAttribute("message", String.format("Sub category(%d) already exists!", subCategory.getName()));
+            redirectAttributes.addFlashAttribute("message", String.format("Sub category(%s) already exists!", subCategory.getName()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/category/subcategory/create-subcategory";
         } catch (SubCategoryNotFoundException e) {
@@ -105,6 +105,6 @@ public class SubCategoryController {
     private String handleException(RedirectAttributes redirectAttributes, Exception e) {
         redirectAttributes.addFlashAttribute("message", e.getLocalizedMessage());
         redirectAttributes.addFlashAttribute("messageType", "error");
-        return "redirect:/school";
+        return "redirect:/product";
     }
 }

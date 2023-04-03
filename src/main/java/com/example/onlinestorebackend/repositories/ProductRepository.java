@@ -11,9 +11,8 @@ import java.util.Optional;
  * @Date 3/21/2023
  */
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByTitle(String title);
-
 
 
 }
