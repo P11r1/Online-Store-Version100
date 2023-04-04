@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- * @author Bahadir Tasli
+ * @author joozepp
  * @Date 3/22/2023
  */
 
@@ -40,12 +40,12 @@ public class UserController {
         model.addAttribute("authorities", authorService.findAllAuthorities());
         return "user/create-user";
     }
-    
+
     @PostMapping("/signup")
     public String createUser(User user, RedirectAttributes redirectAttributes) {
         try {
             userService.findUserByFullName(user.getFullName());
-            redirectAttributes.addFlashAttribute("message",String.format("User(%s) already exist", user.getFullName()));
+            redirectAttributes.addFlashAttribute("message",String.format("User: %s already exists", user.getFullName()));
             redirectAttributes.addFlashAttribute("messageType","error");
             return "redirect:/user/signup";
         } catch (UserNotFoundException e) {
@@ -61,7 +61,7 @@ public class UserController {
     public String deleteUser(@PathVariable String fullName,RedirectAttributes redirectAttributes){
         try {
             userService.deleteUserByFullName(fullName);
-            redirectAttributes.addFlashAttribute("message", String.format("Product(title=%s) deleted successfully!",fullName));
+            redirectAttributes.addFlashAttribute("message", String.format(" User: %s deleted successfully!",fullName));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/user";
         } catch (UserNotFoundException e) {
@@ -73,7 +73,7 @@ public class UserController {
     public String restoreUser(@PathVariable String fullName, RedirectAttributes redirectAttributes) {
         try {
             userService.restoreUserByFullName(fullName);
-            redirectAttributes.addFlashAttribute("message", String.format("User #%d restored successfully!", fullName));
+            redirectAttributes.addFlashAttribute("message", String.format("User #%s restored successfully!", fullName));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/user";
         } catch (UserNotFoundException e) {
@@ -82,9 +82,9 @@ public class UserController {
     }
     @GetMapping("/update/{fullName}")
     public String showUpdateUserPage(@PathVariable String fullName,
-                                        RedirectAttributes redirectAttributes,
-                                        @RequestParam(value = "user", required = false) User user,
-                                        Model model) {
+                                     RedirectAttributes redirectAttributes,
+                                     @RequestParam(value = "user", required = false) User user,
+                                     Model model) {
         if (user == null) {
             try {
                 model.addAttribute("user", userService.findUserByFullName(fullName));
@@ -99,7 +99,7 @@ public class UserController {
     public String updateUser(User user, RedirectAttributes redirectAttributes) {
         try {
             userService.updateUser(user);
-            redirectAttributes.addFlashAttribute("message",String.format("User(%s) has been created succesfully!", user.getFullName()));
+            redirectAttributes.addFlashAttribute("message",String.format("User: %s has been created successfully!", user.getFullName()));
             redirectAttributes.addFlashAttribute("messageType","success");
             return "redirect:/user";
         } catch (UserNotFoundException e) {
@@ -112,6 +112,6 @@ public class UserController {
     private String handleException(RedirectAttributes redirectAttributes, Exception e) {
         redirectAttributes.addFlashAttribute("message", e.getLocalizedMessage());
         redirectAttributes.addFlashAttribute("messageType", "error");
-        return "redirect:/school";
+        return "redirect:/user";
     }
 }

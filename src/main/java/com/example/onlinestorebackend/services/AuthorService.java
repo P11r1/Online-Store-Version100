@@ -20,10 +20,10 @@ public interface AuthorService {
     /**
      * To find author by firstName
      *
-     * @param name Author name
+     * @param firstName Author name
      * @return Author
      */
-    Author findAuthorByName(String name) throws AuthorNotFoundException;
+    Author findAuthorByName(String firstName) throws AuthorNotFoundException;
 
     /**
      * To create a new author

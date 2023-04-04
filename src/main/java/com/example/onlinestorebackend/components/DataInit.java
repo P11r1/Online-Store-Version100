@@ -19,8 +19,8 @@ import static com.example.onlinestorebackend.utils.Constants.Security.*;
 @Component
 public class DataInit {
 
-    //@Autowired
-  //  private CartService cartService;
+    @Autowired
+    private CartService cartService;
     @Autowired
     private UserService userService;
 
@@ -37,12 +37,12 @@ public class DataInit {
 
     @PostConstruct
     public void init(){
-        initProduct();
-        initUser();
-        initAuthor();
-        initCategory();
-        initSubCategory();
-       // initCart();
+//        initProduct();
+//        initUser();
+//        initAuthor();
+//        initCategory();
+//        initSubCategory();
+//       // initCart();
     }
 
     /* private void initCart() {
@@ -109,15 +109,15 @@ public class DataInit {
         System.out.println("Starting initializing Author..");
 
         Author authorAdmin = new Author();
-        authorAdmin.setName(AUTHOR_ADMIN);
+        authorAdmin.setFirstName(AUTHOR_ADMIN);
         createAuthor(authorAdmin);
 
         Author authorUser = new Author();
-        authorUser.setName(AUTHOR_USER);
+        authorUser.setFirstName(AUTHOR_USER);
         createAuthor(authorUser);
 
         Author authorGuest = new Author();
-        authorGuest.setName(AUTHOR_GUEST);
+        authorGuest.setFirstName(AUTHOR_GUEST);
         createAuthor(authorGuest);
     }
 
@@ -147,8 +147,8 @@ public class DataInit {
 
     private void createAuthor(Author author) {
         try {
-            Author resultAuthor = authorService.findAuthorByName(author.getName());
-            System.out.println("Can not pre-initialize author : " + author.getName());
+            Author resultAuthor = authorService.findAuthorByName(author.getFirstName());
+            System.out.println("Can not pre-initialize author : " + author.getFirstName());
         } catch (AuthorNotFoundException e){
             authorService.createAuthor(author);
         }

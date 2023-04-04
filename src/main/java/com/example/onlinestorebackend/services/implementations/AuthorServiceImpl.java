@@ -28,11 +28,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author findAuthorByName(String name) throws AuthorNotFoundException {
-        Optional<Author> optionalAuthor = authorRepository.findByName(name);
+    public Author findAuthorByName(String firstName) throws AuthorNotFoundException {
+        Optional<Author> optionalAuthor = authorRepository.findByFirstName(firstName);
 
         if (optionalAuthor.isEmpty()) {
-            throw new AuthorNotFoundException(name);
+            throw new AuthorNotFoundException(firstName);
         }
 
         return optionalAuthor.get();

@@ -35,7 +35,7 @@
       <tbody>
       <tr th:each="subcategory: ${subcategories}">
         <th scope="row">
-          <a href="#" class="text-decoration-none" th:href="@{/category/subcategory/{id}(id=${subcategory.id})}">
+          <a href="#" class="text-decoration-none" th:href="@{/subcategory/{id}(id=${subcategory.id})}">
             <span th:text="${subcategory.id}"></span>
           </a>
         </th>
@@ -46,10 +46,10 @@
             <i class="bi bi-pen"></i>
           </a>
 
-          <a class="btn btn-danger" role="button" th:href="@{/category/subcategory/delete/{id}(id=${subcategory.id})}" th:if="${subcategory.isActive()}">
+          <a class="btn btn-danger" role="button" th:href="@{/subcategory/delete/{id}(id=${subcategory.id})}" th:if="${subcategory.isActive()}">
             <i class="bi bi-trash2-fill"></i>
           </a>
-          <a class="btn btn-success" role="button" th:href="@{/category/subcategory/restore/{id}(id=${subcategory.id})}"
+          <a class="btn btn-success" role="button" th:href="@{/subcategory/restore/{id}(id=${subcategory.id})}"
              th:if="${!subcategory.isActive()}">
             <i class="bi bi-arrow-counterclockwise"></i>
           </a>

@@ -15,12 +15,15 @@ import java.util.List;
  */
 public interface CartService {
 
+    void createCartByOrderLine(OrderLine orderLine);
+
+
     /**
      * To add OrderLine to the Cart
      *
      * @param orderLine OrderLine
      */
-    void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException;
+//    void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException;
 
     /**
      * To remove OrderLine from the Cart

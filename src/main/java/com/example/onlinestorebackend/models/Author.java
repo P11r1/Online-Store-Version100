@@ -23,7 +23,7 @@ public class Author extends Auditable<String> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private String firstName;
     private boolean isActive;
 
 }

@@ -41,7 +41,7 @@
           </div>
           <div class="form-group mb-3">
             <select class="form-select" aria-label="authorities" th:field="*{author.id}">
-              <option th:each="author: ${authorities}" th:text="${author.name.replace('_', ' ')}" th:value="${author.id}"></option>
+              <option th:each="author: ${authorities}" th:text="${author.firstName.replace('_', ' ')}" th:value="${author.id}"></option>
             </select>
           </div>
           <a class="btn btn-light mb-3" type="button" href="/">Cancel</a>

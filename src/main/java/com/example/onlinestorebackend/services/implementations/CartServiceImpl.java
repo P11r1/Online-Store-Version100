@@ -32,11 +32,32 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException {
-        OrderLine existingOrderLine = orderLineService.findOrderLineById(orderLine.getId());
-        existingOrderLine.setActive(true);
-        orderLineRepository.save(existingOrderLine);
+    public void createCartByOrderLine(OrderLine orderLine) {
+        try {
+            Cart cart = findCartById(orderLine.getId());
+            cart.setTotalCost(orderLine.getProductPrice());
+            cartRepository.saveAndFlush(cart);
+        } catch (RuntimeException | CartNotFoundException exception) {
+            Cart cart = new Cart();
+            cart.setOrderLines(cart.getOrderLines());
+            cart.setTotalCost(orderLine.getProductPrice());
+            orderLine.setActive(true);
+            cartRepository.save(cart);
+        }
     }
+
+
+    @Override
+    public Cart findCartById(Long id) throws CartNotFoundException {
+        Optional<Cart> cartOptional = cartRepository.findById(id);
+
+        if (cartOptional.isEmpty()) {
+            throw new CartNotFoundException(id);
+        }
+        return cartOptional.get();
+    }
+
+
 
 
     @Override
@@ -63,15 +84,7 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-    @Override
-    public Cart findCartById(Long id) throws CartNotFoundException {
-        Optional<Cart> cartOptional = cartRepository.findById(id);
 
-        if (cartOptional.isEmpty()) {
-            throw new CartNotFoundException(id);
-        }
-        return cartOptional.get();
-    }
 
     @Override
     public void deleteCartById(Long id) throws CartNotFoundException {
