@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CartService {
 
-    void createCartByOrderLine(OrderLine orderLine);
+//    void createCartByOrderLine(OrderLine orderLine);
 
 
     /**
@@ -44,7 +44,7 @@ public interface CartService {
      *
      * @param cart Cart
      */
-    void createCart(Cart cart);
+    Cart createCart(Cart cart);
 
     /**
      * To update an existing Cart

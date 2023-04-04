@@ -7,12 +7,14 @@ import com.example.onlinestorebackend.models.Product;
 import com.example.onlinestorebackend.models.User;
 import com.example.onlinestorebackend.repositories.CartRepository;
 import com.example.onlinestorebackend.repositories.UserRepository;
+import com.example.onlinestorebackend.services.CartService;
 import com.example.onlinestorebackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +31,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     @Autowired
-    private CartRepository cartRepository;
+    private CartService cartService;
     @Override
     public User findUserById(Long id) throws UserNotFoundException {
 
@@ -61,11 +64,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(User user) {
         Cart cart = new Cart();
-        cart.setActive(true);
+        cart.setTotalCost(0L);
+        Cart newCart = cartService.createCart(cart);
+
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        user.setCart(cart);
-        cartRepository.save(cart);
+        user.setCart(newCart);
         userRepository.save(user);
     }
 

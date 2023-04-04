@@ -39,7 +39,7 @@ public class DataInit {
     public void init(){
 //        initProduct();
 //        initUser();
-//        initAuthor();
+        initAuthor();
 //        initCategory();
 //        initSubCategory();
 //       // initCart();
@@ -107,7 +107,6 @@ public class DataInit {
 
     private void initAuthor() {
         System.out.println("Starting initializing Author..");
-
         Author authorAdmin = new Author();
         authorAdmin.setFirstName(AUTHOR_ADMIN);
         createAuthor(authorAdmin);
@@ -115,10 +114,6 @@ public class DataInit {
         Author authorUser = new Author();
         authorUser.setFirstName(AUTHOR_USER);
         createAuthor(authorUser);
-
-        Author authorGuest = new Author();
-        authorGuest.setFirstName(AUTHOR_GUEST);
-        createAuthor(authorGuest);
     }
 
     private void initUser() {
@@ -127,6 +122,7 @@ public class DataInit {
 
         try {
             Author author = authorService.findAuthorByName(AUTHOR_ADMIN);
+
 
             User user = new User();
             user.setFullName("admin@finalproject.com");
