@@ -40,7 +40,7 @@
           </a>
         </th>
         <td th:text="${subcategory.name}"></td>
-        <td th:text="${subcategory.getCategory().id}"></td>
+        <td th:text="${subcategory.getCategory().name}"></td>
         <td>
           <a class="btn btn-warning" role="button" th:href="@{/subcategory/update/{id}(id=${subcategory.id})}" th:if="${subcategory.isActive()}">
             <i class="bi bi-pen"></i>

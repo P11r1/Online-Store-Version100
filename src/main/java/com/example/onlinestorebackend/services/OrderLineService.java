@@ -4,6 +4,7 @@ import com.example.onlinestorebackend.exceptions.OrderLineNotFoundException;
 import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
+import com.example.onlinestorebackend.models.User;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface OrderLineService {
      * To create OrderLine by Product
      * @param product Product
      */
-    void createOrderLineByProduct(Product product);
+    void createOrderLineByProduct(Product product, User user);
 
     /**
      * To find active OrderLine by Product

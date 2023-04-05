@@ -26,25 +26,9 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private CartRepository cartRepository;
     @Autowired
-    private OrderLineRepository orderLineRepository;
-    @Autowired
     private OrderLineService orderLineService;
 
 
-//    @Override
-//    public void createCartByOrderLine(OrderLine orderLine) {
-//        try {
-//            Cart cart = findCartById(orderLine.getId());
-//            cart.setTotalCost(orderLine.getProductPrice());
-//            cartRepository.saveAndFlush(cart);
-//        } catch (RuntimeException | CartNotFoundException exception) {
-//            Cart cart = new Cart();
-//            cart.setOrderLines(cart.getOrderLines());
-//            cart.setTotalCost(orderLine.getProductPrice());
-//            orderLine.setActive(true);
-//            cartRepository.save(cart);
-//        }
-//    }
 
 
     @Override
@@ -58,7 +42,10 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    @Override
+    public void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException {
 
+    }
 
     @Override
     public void removeOrderLineFromCart(OrderLine orderLine) {

@@ -3,6 +3,7 @@ package com.example.onlinestorebackend.controllers;
 import com.example.onlinestorebackend.exceptions.SubCategoryNotFoundException;
 import com.example.onlinestorebackend.models.Category;
 import com.example.onlinestorebackend.models.SubCategory;
+import com.example.onlinestorebackend.services.CategoryService;
 import com.example.onlinestorebackend.services.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class SubCategoryController {
     @Autowired
     private SubCategoryService subCategoryService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping()
     public String showSubCategoryListPage(Model model, @ModelAttribute("message") String message,
@@ -53,9 +56,12 @@ public class SubCategoryController {
     }
 
     @GetMapping("/create")
-    public String showCreateSubCategoryPage(@ModelAttribute("subcategory") SubCategory subCategory,
+    public String showCreateSubCategoryPage(Model model,
+                                            @ModelAttribute("subcategory") SubCategory subCategory,
                                             @ModelAttribute("message") String message,
-                                            @ModelAttribute("messageType") String messageType) {
+                                            @ModelAttribute("messageType") String messageType,
+                                            @ModelAttribute("category") Category category) {
+        model.addAttribute("categories", categoryService.findAllCategories());
         return "category/subcategory/create-subcategory";
     }
 
@@ -79,6 +85,7 @@ public class SubCategoryController {
     public String showUpdateSubCategoryPage(@PathVariable Long id, RedirectAttributes redirectAttributes,
                                             @RequestParam(value = "subcategory", required = false) SubCategory subCategory,
                                             Model model) {
+        model.addAttribute("categories", categoryService.findAllCategories());
         if (subCategory == null) {
             try {
                 model.addAttribute("subcategory", subCategoryService.findSubCategoryById(id));

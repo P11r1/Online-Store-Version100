@@ -2,15 +2,20 @@ package com.example.onlinestorebackend.controllers;
 
 import com.example.onlinestorebackend.exceptions.OrderLineNotFoundException;
 import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
+import com.example.onlinestorebackend.exceptions.UserNotFoundException;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
+import com.example.onlinestorebackend.models.User;
 import com.example.onlinestorebackend.services.OrderLineService;
 import com.example.onlinestorebackend.services.ProductService;
+import com.example.onlinestorebackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 
 /**
  * @author Marko
@@ -23,6 +28,8 @@ public class OrderLineController {
     private OrderLineService orderLineService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String showOrderLinePage(Model model, @ModelAttribute("message") String message,
@@ -67,15 +74,18 @@ public class OrderLineController {
 
 
     @GetMapping("/create-by-product/{productId}")
-    public String createOrderLineByProduct(@PathVariable Long productId, RedirectAttributes redirectAttributes) {
+    public String createOrderLineByProduct(@PathVariable Long productId, RedirectAttributes redirectAttributes, Principal principal) {
         try {
             Product product = productService.findProductById(productId);
-            orderLineService.createOrderLineByProduct(product);
+            User user = userService.findUserByFullName(principal.getName());
+            orderLineService.createOrderLineByProduct(product, user);
             redirectAttributes.addFlashAttribute("message", "Product added to the cart!");
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/product";
         } catch (ProductNotFoundException e) {
             return handleException(redirectAttributes, e);
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
     // To show create product form page

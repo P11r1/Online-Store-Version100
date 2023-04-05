@@ -25,4 +25,6 @@ public class OrderLine extends Auditable<String> implements Serializable {
     private float productPrice;
 
     private boolean isActive;
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Cart cart;
 }

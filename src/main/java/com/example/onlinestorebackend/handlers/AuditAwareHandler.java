@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public class AuditAwareHandler implements AuditorAware<String> {
     @Override
-    public Optional<String> getCurrentAuditor() /*Set the value for CreatedBy & Lastmodified by*/ {
+    public Optional<String> getCurrentAuditor() /*Set the value for CreatedBy & LastModified by*/ {
         return Optional.of(Constants.Audit.DEFAULT_AUDITOR);
     }
 }

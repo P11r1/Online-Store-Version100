@@ -5,6 +5,7 @@ import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
 import com.example.onlinestorebackend.models.Order;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
+import com.example.onlinestorebackend.models.User;
 import com.example.onlinestorebackend.repositories.OrderLineRepository;
 import com.example.onlinestorebackend.repositories.ProductRepository;
 import com.example.onlinestorebackend.services.OrderLineService;
@@ -39,7 +40,7 @@ public class OrderLineServiceImpl implements OrderLineService {
     }
 
     @Override
-    public void createOrderLineByProduct(Product product) {
+    public void createOrderLineByProduct(Product product, User user) {
         try {
             OrderLine orderLine = findActiveOrderLineByProduct(product);
             orderLine.setQtyOfProducts(orderLine.getQtyOfProducts() + 1);
@@ -51,6 +52,7 @@ public class OrderLineServiceImpl implements OrderLineService {
             orderLine.setQtyOfProducts(1L);
             orderLine.setProductPrice(product.getPrice());
             orderLine.setActive(true);
+            orderLine.setCart(user.getCart());
             orderLineRepository.save(orderLine);
         }
     }

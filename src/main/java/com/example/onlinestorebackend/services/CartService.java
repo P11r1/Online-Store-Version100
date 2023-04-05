@@ -15,7 +15,6 @@ import java.util.List;
  */
 public interface CartService {
 
-//    void createCartByOrderLine(OrderLine orderLine);
 
 
     /**
@@ -23,7 +22,7 @@ public interface CartService {
      *
      * @param orderLine OrderLine
      */
-//    void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException;
+    void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException;
 
     /**
      * To remove OrderLine from the Cart

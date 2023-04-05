@@ -36,18 +36,6 @@ public class CartController {
         return "cart/list-cart";
     }
 
-//    @GetMapping("/create-by-orderline/{orderlineId}")
-//    public String createCartByOrderLine(@PathVariable Long orderlineId, RedirectAttributes redirectAttributes) {
-//        try {
-//            OrderLine orderLine = orderLineService.findOrderLineById(orderlineId);
-//            cartService.createCartByOrderLine(orderLine);
-//            redirectAttributes.addFlashAttribute("message", "Product added to the cart!");
-//            redirectAttributes.addFlashAttribute("messageType", "success");
-//            return "redirect:/list-cart";
-//        } catch (OrderLineNotFoundException e) {
-//            return handleException(redirectAttributes, e);
-//        }
-//    }
 
     @GetMapping("/{id}")
     public String showCartViewPage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
