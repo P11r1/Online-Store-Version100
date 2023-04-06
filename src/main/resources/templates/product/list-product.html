@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,20 +48,25 @@
                 <td th:text="${product.inventory}"></td>
                 <td th:text="${product.price}"></td>
                 <td>
-                    <a class="btn btn-warning" role="button" th:href="@{/product/update/{title}(title=${product.title})}" th:if="${product.isActive()}">
+                    <a class="btn btn-warning" role="button"
+                       th:href="@{/product/update/{title}(title=${product.title})}" th:if="${product.isActive()}">
                         <i class="bi bi-pen"></i>
                     </a>
 
-                    <a class="btn btn-danger" role="button" th:href="@{/product/delete/{title}(title=${product.title})}" th:if="${product.isActive()}">
+                    <a class="btn btn-danger" role="button" th:href="@{/product/delete/{title}(title=${product.title})}"
+                       th:if="${product.isActive()}">
                         <i class="bi bi-trash2-fill"></i>
                     </a>
-                    <a class="btn btn-success" role="button" th:href="@{/product/restore/{title}(title=${product.title})}"
+                    <a class="btn btn-success" role="button"
+                       th:href="@{/product/restore/{title}(title=${product.title})}"
                        th:if="${!product.isActive()}">
                         <i class="bi bi-arrow-counterclockwise"></i>
                     </a>
-                    <a class="btn btn-success" role="button" th:href="@{/orderline/create-by-product/{productId}(productId=${product.id})}">
-                        <i class="bi bi-plus"></i>
-                    </a>
+                        <a class="btn btn-success" role="button" sec:authorize="hasAnyRole('ADMIN', 'USER')"
+                           th:if="${product.isActive()}"
+                           th:href="@{/orderline/create-by-product/{productId}(productId=${product.id})}">
+                            <i class="bi bi-plus"></i>
+                        </a>
                 </td>
             </tr>
             </tbody>

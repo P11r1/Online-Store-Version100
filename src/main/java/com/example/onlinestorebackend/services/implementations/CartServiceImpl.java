@@ -43,7 +43,10 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException {
+    public void addOrderLineToCart(OrderLine orderLine, User user) throws OrderLineNotFoundException {
+        Cart cart = user.getCart();
+        cart.setOrderLines(orderLine.getCart().getOrderLines());
+
 
     }
 

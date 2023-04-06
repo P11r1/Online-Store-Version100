@@ -22,7 +22,7 @@ public interface CartService {
      *
      * @param orderLine OrderLine
      */
-    void addOrderLineToCart(OrderLine orderLine) throws OrderLineNotFoundException;
+    void addOrderLineToCart(OrderLine orderLine, User user) throws OrderLineNotFoundException;
 
     /**
      * To remove OrderLine from the Cart
