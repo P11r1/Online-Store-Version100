@@ -3,6 +3,7 @@ package com.example.onlinestorebackend.controllers;
 import com.example.onlinestorebackend.exceptions.OrderLineNotFoundException;
 import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
 import com.example.onlinestorebackend.exceptions.UserNotFoundException;
+import com.example.onlinestorebackend.models.Cart;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
 import com.example.onlinestorebackend.models.User;

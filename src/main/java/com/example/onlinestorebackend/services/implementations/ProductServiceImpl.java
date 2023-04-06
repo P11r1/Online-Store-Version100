@@ -1,9 +1,12 @@
 package com.example.onlinestorebackend.services.implementations;
 
 import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
+import com.example.onlinestorebackend.exceptions.SubCategoryNotFoundException;
 import com.example.onlinestorebackend.models.Product;
+import com.example.onlinestorebackend.models.SubCategory;
 import com.example.onlinestorebackend.repositories.ProductRepository;
 import com.example.onlinestorebackend.services.ProductService;
+import com.example.onlinestorebackend.services.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +23,18 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private SubCategoryService subCategoryService;
 
     @Override
     public void createProduct(Product product) {
+        SubCategory subCategory = null;
+        try {
+            subCategory = subCategoryService.findSubCategoryById(product.getSubCategory().getId());
+        } catch (SubCategoryNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        product.setSubCategory(subCategory);
         product.setActive(true);
         productRepository.save(product);
     }

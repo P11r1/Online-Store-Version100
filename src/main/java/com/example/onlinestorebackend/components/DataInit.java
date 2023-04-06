@@ -41,7 +41,7 @@ public class DataInit {
 //        initUser();
         initAuthor();
 //        initCategory();
-//        initSubCategory();
+        initSubCategory();
 //       // initCart();
     }
 
@@ -86,10 +86,10 @@ public class DataInit {
         System.out.println("Starting initializing Product..");
 
         try {
-            Category searchCategory = categoryService.findCategoryByName("Sports");
+            SubCategory searchSubCategory = subCategoryService.findSubCategoryByName("ttt");
             Product product = new Product();
             product.setTitle("basketball");
-            product.setCategory(searchCategory);
+            product.setSubCategory(searchSubCategory);
             product.setDescription("ball");
             product.setInventory(4f);
 
@@ -99,7 +99,7 @@ public class DataInit {
             } catch (ProductNotFoundException e) {
                 productService.createProduct(product);;
             }
-        } catch (CategoryNotFoundException e) {
+        } catch (SubCategoryNotFoundException e) {
             System.out.println("Can not pre-initialize category! Reason : " + e.getLocalizedMessage());
         }
     }

@@ -1,5 +1,6 @@
 package com.example.onlinestorebackend.repositories;
 
+import com.example.onlinestorebackend.models.Cart;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

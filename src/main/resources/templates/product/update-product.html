@@ -36,8 +36,8 @@
                 <input type="number" aria-label="price" class="form-control" th:field="*{price}" required>
             </div>
             <div class="form-group mb-3">
-                <select class="form-select" aria-label="category" th:field="*{category.id}">
-                    <option th:each="category: ${categories}" th:text="${category.name.replace('_', ' ')}" th:value="${category.id}"  >
+                <select class="form-select" aria-label="subCategories" th:field="*{subCategory.id}">
+                    <option th:each="subCategory:${subCategories}" th:text="${subCategory.name.replace('_',' ')}" th:value="${subCategory.id}"> >
                     </option>
                 </select>
             </div>

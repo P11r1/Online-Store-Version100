@@ -4,8 +4,10 @@ import com.example.onlinestorebackend.exceptions.CategoryNotFoundException;
 import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
 import com.example.onlinestorebackend.models.Category;
 import com.example.onlinestorebackend.models.Product;
+import com.example.onlinestorebackend.models.SubCategory;
 import com.example.onlinestorebackend.services.CategoryService;
 import com.example.onlinestorebackend.services.ProductService;
+import com.example.onlinestorebackend.services.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,7 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    private CategoryService categoryService;
+    private SubCategoryService subCategoryService;
 
     @GetMapping
     public String showProductListPage(Model model, @ModelAttribute("message") String message,
@@ -73,10 +75,10 @@ public class ProductController {
     @GetMapping("/create")
     public String createProduct(Model model,
                                 @ModelAttribute("product") Product product,
-                                @ModelAttribute("category") Category category,
+                                @ModelAttribute("subCategory") SubCategory subCategory,
                                 @ModelAttribute("message") String message,
                                 @ModelAttribute("messageType") String messageType) {
-        model.addAttribute("categories",categoryService.findAllCategories());
+        model.addAttribute("subCategories", subCategoryService.findAllSubCategories());
         return "product/create-product";
     }
 
@@ -100,11 +102,11 @@ public class ProductController {
     public String showUpdateProductPage(@PathVariable String title,
                                         RedirectAttributes redirectAttributes,
                                         @RequestParam(value = "product", required = false) Product product,
-                                        Model model) {
-        model.addAttribute("categories",categoryService.findAllCategories());
+                                        Model model,@RequestParam(value = "subCategory", required = false)SubCategory subCategory) {
         if (product == null) {
             try {
                 model.addAttribute("product", productService.findProductByTitle(title));
+                model.addAttribute("subCategories",subCategoryService.findAllSubCategories());
             } catch (ProductNotFoundException e) {
                 return handleException(redirectAttributes, e);
             }
