@@ -42,7 +42,7 @@ public class OrderLineServiceImpl implements OrderLineService {
     @Override
     public void createOrderLineByProduct(Product product, User user) {
         try {
-            OrderLine orderLine = findActiveOrderLineByProduct(product);
+            OrderLine orderLine = findActiveOrderLineByProductAndUser(product, user);
             orderLine.setQtyOfProducts(orderLine.getQtyOfProducts() + 1);
             orderLine.setProductPrice(product.getPrice() * orderLine.getQtyOfProducts());
             orderLineRepository.saveAndFlush(orderLine);
@@ -52,15 +52,16 @@ public class OrderLineServiceImpl implements OrderLineService {
             orderLine.setQtyOfProducts(1L);
             orderLine.setProductPrice(product.getPrice());
             orderLine.setActive(true);
+            orderLine.setUser(user);
             orderLine.setCart(user.getCart());
             orderLineRepository.save(orderLine);
         }
     }
 
     @Override
-    public OrderLine findActiveOrderLineByProduct(Product product) {
+    public OrderLine findActiveOrderLineByProductAndUser(Product product, User user) {
 
-        Optional<OrderLine> orderLineOptional = orderLineRepository.findAllByProduct(product).stream()
+        Optional<OrderLine> orderLineOptional = orderLineRepository.findAllByProductAndUser(product, user).stream()
                 .filter(OrderLine::isActive)
                 .findFirst();
 

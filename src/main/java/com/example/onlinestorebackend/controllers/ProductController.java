@@ -13,7 +13,10 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 
 /**
  * Product Controller
@@ -84,14 +87,15 @@ public class ProductController {
 
     // Called when we press submit button in the create product form
     @PostMapping
-    public String createProduct(Product product, RedirectAttributes redirectAttributes) {
+    public String createProduct(Product product, RedirectAttributes redirectAttributes,
+                                @RequestParam("imageProduct") MultipartFile imageProduct) throws IOException {
         try {
             Product searchProduct = productService.findProductByTitle(product.getTitle());
             redirectAttributes.addFlashAttribute("message", String.format("Product: %s already exists!", product.getTitle()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/product/create-product";
         } catch (ProductNotFoundException e) {
-            productService.createProduct(product);
+            productService.createProduct(product, imageProduct);
             redirectAttributes.addFlashAttribute("message", String.format("Product: %s has been created successfully!", product.getTitle()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/product";

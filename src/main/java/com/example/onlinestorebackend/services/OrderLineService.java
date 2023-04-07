@@ -25,7 +25,7 @@ public interface OrderLineService {
      * @param product Product
      * @return Product
      */
-    OrderLine findActiveOrderLineByProduct(Product product);
+    OrderLine findActiveOrderLineByProductAndUser(Product product, User user);
 
 
     /**

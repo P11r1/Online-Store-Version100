@@ -17,7 +17,7 @@
             <span th:text="${message}"></span>
         </div>
 
-        <form th:action="@{/product}" method="post" th:object="${product}">
+        <form th:action="@{/product}" method="post" th:object="${product}" enctype="multipart/form-data">
             <div class="input-group">
                 <span class="input-group-text">Product name</span>
                 <input type="text" aria-label="title" class="form-control" th:field="*{title}" required>
@@ -38,10 +38,18 @@
                 <input type="number" aria-label="Price" class="form-control" th:field="*{price}" required>
             </div>
             <br/>
-            <div class="input-group">
-                <span class="input-group-text">image_url</span>
-                <input type="text" aria-label="Price" class="form-control" th:field="*{thumbnailUrl}" >
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="imageProduct">Image Product</label>
+                <div class="col-md-4">
+                    <input id="imageProduct" name="imageProduct" class="input-file" type="file">
+                </div>
             </div>
+
+<!--            <div class="custom-file mb-2">-->
+<!--                <span class="input-group-text">image_url</span>-->
+<!--                <input type="file" aria-label="Price" name="file" class="custom-file-input" id="customFile" accept="image/png, image/jpg, image/jpeg" th:field="*{thumbnailUrl}"/>-->
+<!--            </div>-->
             <br/>
             <!--            TODO CHECK IF WORKS        -->
             <div class="form-group mb-3">
