@@ -9,6 +9,7 @@ import com.example.onlinestorebackend.services.CategoryService;
 import com.example.onlinestorebackend.services.ProductService;
 import com.example.onlinestorebackend.services.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Product Controller
@@ -32,6 +34,7 @@ public class ProductController {
 
     @Autowired
     private SubCategoryService subCategoryService;
+
 
     @GetMapping
     public String showProductListPage(Model model, @ModelAttribute("message") String message,
@@ -87,15 +90,14 @@ public class ProductController {
 
     // Called when we press submit button in the create product form
     @PostMapping
-    public String createProduct(Product product, RedirectAttributes redirectAttributes,
-                                @RequestParam("imageProduct") MultipartFile imageProduct) throws IOException {
+    public String createProduct(Product product, RedirectAttributes redirectAttributes) {
         try {
             Product searchProduct = productService.findProductByTitle(product.getTitle());
             redirectAttributes.addFlashAttribute("message", String.format("Product: %s already exists!", product.getTitle()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/product/create-product";
         } catch (ProductNotFoundException e) {
-            productService.createProduct(product, imageProduct);
+            productService.createProduct(product);
             redirectAttributes.addFlashAttribute("message", String.format("Product: %s has been created successfully!", product.getTitle()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/product";

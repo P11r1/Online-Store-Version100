@@ -29,7 +29,7 @@
             <thead>
             <th scope="col">Click for Details</th>
             <th scope="col">Cart Id</th>
-            <th scope="col">Quantity Of Order</th>
+            <th scope="col">Orderline</th>
             <th scope="col">Product Price</th>
             <th scope="col">Actions</th>
 
@@ -42,7 +42,7 @@
                     </a>
                 </th>
                 <td th:text="${cart.id}"></td>
-                <td th:text="${cart.orderLines}"></td>
+                <td th:text="${cart.getOrderLines()}"></td>
                 <td th:text="${cart.totalCost}"></td>
                 <td>
                     <a class="btn btn-warning" role="button" th:href="@{/cart/update/{id}(id=${cart.id})}" th:if="${cart.isActive()}">

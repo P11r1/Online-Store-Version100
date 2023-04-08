@@ -7,11 +7,9 @@ import com.example.onlinestorebackend.models.SubCategory;
 import com.example.onlinestorebackend.repositories.ProductRepository;
 import com.example.onlinestorebackend.services.ProductService;
 import com.example.onlinestorebackend.services.SubCategoryService;
-import com.example.onlinestorebackend.utils.ImageUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,25 +28,15 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     @Autowired
     private SubCategoryService subCategoryService;
-    @Autowired
-    private ImageUpload imageUpload;
 
     @Override
-    public void createProduct(Product product, MultipartFile imageProduct) throws IOException {
+    public void createProduct(Product product)  {
         SubCategory subCategory = null;
         try {
             subCategory = subCategoryService.findSubCategoryById(product.getSubCategory().getId());
         } catch (SubCategoryNotFoundException e) {
             throw new RuntimeException(e);
         }
-        if(imageProduct == null) {
-            product.setThumbnailUrl(null);
-        } else {
-            if (imageUpload.uploadImage(imageProduct)) {
-                System.out.println("Upload successfully!");
-            }
-        }
-        product.setThumbnailUrl(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
 
         product.setSubCategory(subCategory);
         product.setActive(true);
