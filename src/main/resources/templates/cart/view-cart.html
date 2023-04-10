@@ -13,16 +13,16 @@
     <div class="container">
         <h1 class="fw-bold">Cart Info</h1>
         <div class="form-floating mb-3">
-            <input type="text" readonly class="form-control-plaintext" id="id" th:value="${cart.id}">
-            <label for="name">Name</label>
+<!--            <input type="text" readonly class="form-control-plaintext" id="id" th:value="${cart.id}">-->
+<!--            <label for="name">Name</label>-->
             <div class="form-floating mb-3">
                 <input type="text" readonly class="form-control-plaintext" id="name" th:value="${cart.totalCost}">
                 <label for="name">Name</label>
             </div>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" readonly class="form-control-plaintext" id="active" th:value="${cart.active} ? 'Yes' : 'No'">
-            <label for="name">Active</label>
+<!--            <input type="text" readonly class="form-control-plaintext" id="active" th:value="${cart.active} ? 'Yes' : 'No'">-->
+<!--            <label for="name">Active</label>-->
         </div>
         <a class="btn btn-outline-primary" href="/cart" role="button">Back</a>
     </div>

@@ -33,8 +33,8 @@ public class CartController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{id}")
-    public String showCartViewPage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes, Principal principal) {
+    @GetMapping
+    public String showCartViewPage(Model model, RedirectAttributes redirectAttributes, Principal principal) {
         try {
             User user = userService.findUserByFullName(principal.getName());
             model.addAttribute("cart", cartService.getCartByUser(user));
