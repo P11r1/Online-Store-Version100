@@ -1,6 +1,5 @@
 package com.example.onlinestorebackend.repositories;
 
-import com.example.onlinestorebackend.models.Cart;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
 import com.example.onlinestorebackend.models.User;
@@ -15,6 +14,9 @@ import java.util.Optional;
  */
 public interface OrderLineRepository extends JpaRepository<OrderLine, Long> {
     List<OrderLine> findAllByProductAndUser(Product product, User user);
+    List<OrderLine> findOrderLinesByUser(User user);
+
+
 
 
 }

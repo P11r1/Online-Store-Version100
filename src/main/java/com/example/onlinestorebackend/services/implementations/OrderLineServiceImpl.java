@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Marko
@@ -53,7 +54,6 @@ public class OrderLineServiceImpl implements OrderLineService {
             orderLine.setProductPrice(product.getPrice());
             orderLine.setActive(true);
             orderLine.setUser(user);
-            orderLine.setCart(user.getCart());
             orderLineRepository.save(orderLine);
         }
     }
@@ -69,6 +69,13 @@ public class OrderLineServiceImpl implements OrderLineService {
             throw new RuntimeException("OrderLine not found for given product");
         }
         return orderLineOptional.get();
+    }
+
+    @Override
+    public List<OrderLine> findActiveOrderLineByUser(User user) {
+        return orderLineRepository.findOrderLinesByUser(user).stream()
+                .filter(OrderLine::isActive)
+                .collect(Collectors.toList());
     }
 
 

@@ -34,6 +34,16 @@ public class UserController {
         return "user/list-user";
     }
 
+    @GetMapping("/{id}")
+    public String showUserViewPage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("user", userService.findUserById(id));
+            return "user/view-user";
+        } catch (UserNotFoundException e) {
+            return handleException(redirectAttributes, e);
+        }
+    }
+
     @GetMapping("/signup")
     public String showSignupPage(Model model, @ModelAttribute("user")User user,@ModelAttribute("message")String message,
                                  @ModelAttribute("messageType") String messageType) {

@@ -3,17 +3,22 @@ package com.example.onlinestorebackend.controllers;
 import com.example.onlinestorebackend.exceptions.CartNotFoundException;
 import com.example.onlinestorebackend.exceptions.OrderLineNotFoundException;
 import com.example.onlinestorebackend.exceptions.ProductNotFoundException;
+import com.example.onlinestorebackend.exceptions.UserNotFoundException;
 import com.example.onlinestorebackend.models.Cart;
 import com.example.onlinestorebackend.models.OrderLine;
 import com.example.onlinestorebackend.models.Product;
+import com.example.onlinestorebackend.models.User;
 import com.example.onlinestorebackend.services.CartService;
 import com.example.onlinestorebackend.services.OrderLineService;
 import com.example.onlinestorebackend.services.ProductService;
+import com.example.onlinestorebackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 
 /**
  * @author Bahadir Tasli
@@ -23,106 +28,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/cart")
 public class CartController {
     @Autowired
-    private ProductService productService;
-    @Autowired
     private CartService cartService;
+
     @Autowired
-    private OrderLineService orderLineService;
-
-    @GetMapping
-    public String showCartPage(Model model, @ModelAttribute("message") String message,
-                                    @ModelAttribute("messageType") String messageType) {
-        model.addAttribute("carts", cartService.findAllCarts());
-        return "cart/list-cart";
-    }
-
+    private UserService userService;
 
     @GetMapping("/{id}")
-    public String showCartViewPage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String showCartViewPage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes, Principal principal) {
         try {
-            model.addAttribute("cart", cartService.findCartById(id));
+            User user = userService.findUserByFullName(principal.getName());
+            model.addAttribute("cart", cartService.getCartByUser(user));
             return "cart/view-cart";
-        } catch (CartNotFoundException e) {
-            return handleException(redirectAttributes, e);
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
-
-    @GetMapping("/delete/{id}")
-    public String deleteCart(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        try {
-            cartService.deleteCartById(id);
-            redirectAttributes.addFlashAttribute("message", String.format("Cart %d deleted successfully!", id));
-            redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/cart";
-        } catch (CartNotFoundException e) {
-            return handleException(redirectAttributes, e);
-        }
-    }
-
-    @GetMapping("/restore/{id}")
-    public String restoreOrderLine(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        try {
-            cartService.restoreCartById(id);
-            redirectAttributes.addFlashAttribute("message", String.format("Cart %d deleted successfully!", id));
-            redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/cart";
-        } catch (CartNotFoundException e) {
-            return handleException(redirectAttributes, e);
-        }
-    }
-
-    // To show create product form page
-    @GetMapping("/create")
-    public String createOrderLine(Model model, @ModelAttribute("cart")Cart cart,@ModelAttribute("product") Product product,
-                                  @ModelAttribute("message") String message,
-                                  @ModelAttribute("messageType") String messageType) {
-        model.addAttribute("products",productService.findAllProducts());
-        return "cart/create-cart";
-    }
-
-    // Called shen we press submit button in the create product form
-    @PostMapping("/create")
-    public String createCart(Cart cart, RedirectAttributes redirectAttributes) {
-        try {
-            Cart searchCart = cartService.findCartById(cart.getId());
-            redirectAttributes.addFlashAttribute("message", String.format("Cart %d already exists!", cart.getId()));
-            redirectAttributes.addFlashAttribute("messageType", "error");
-            return "redirect:/cart/create-cart";
-        } catch (CartNotFoundException e) {
-            cartService.createCart(cart);
-            redirectAttributes.addFlashAttribute("message", String.format("Product %d has been created successfully!", cart.getId()));
-            redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/cart";
-        }
-    }
-
-    @GetMapping("/update/{id}")
-    public String showUpdateCartPage(@PathVariable Long id,
-                                        RedirectAttributes redirectAttributes,
-                                        @RequestParam(value = "cart", required = false) Cart cart,
-                                        Model model) {
-        if (cart == null) {
-            try {
-                model.addAttribute("cart", cartService.findCartById(id));
-            } catch (CartNotFoundException e) {
-                return handleException(redirectAttributes, e);
-            }
-        }
-        return "cart/update-cart";
-    }
-
-    @PostMapping("/update")
-    public String updateCart(Cart cart, RedirectAttributes redirectAttributes) {
-        try {
-            cartService.updateCart(cart);
-            redirectAttributes.addFlashAttribute("message", String.format("Product(%s) has been created successfully!", cart.getId()));
-            redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/cart";
-        } catch (CartNotFoundException e) {
-            return handleException(redirectAttributes, e);
-        }
-    }
-
 
     // PRIVATE METHODS //
     private String handleException(RedirectAttributes redirectAttributes, Exception e) {

@@ -26,7 +26,5 @@ public class OrderLine extends Auditable<String> implements Serializable {
 
     private boolean isActive;
     @OneToOne(cascade = CascadeType.MERGE)
-    private Cart cart;
-    @OneToOne(cascade = CascadeType.MERGE)
     private User user;
 }

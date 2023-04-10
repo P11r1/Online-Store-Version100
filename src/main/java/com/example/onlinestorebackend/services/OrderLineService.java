@@ -27,6 +27,8 @@ public interface OrderLineService {
      */
     OrderLine findActiveOrderLineByProductAndUser(Product product, User user);
 
+    List<OrderLine> findActiveOrderLineByUser(User user);
+
 
     /**
      * To create a new orderLine

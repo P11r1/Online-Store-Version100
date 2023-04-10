@@ -12,19 +12,13 @@ import java.util.List;
  * @Date 3/23/2023
  */
 
-@Entity
 @Data
-@EqualsAndHashCode
-public class Cart extends Auditable<String> implements Serializable {
+public class Cart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private Long id;
     @OneToMany(cascade = CascadeType.MERGE)
     private List<OrderLine> orderLines;
     private float totalCost;
-    private boolean isActive;
 
 }
