@@ -26,8 +26,10 @@ public class Order extends Auditable<String> implements Serializable {
 
     private String deliveryAddress;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private OrderDetails orderDetails;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderLine> orderLines;
+    @OneToOne(cascade = CascadeType.MERGE)
+    private User user;
 
     @Enumerated(EnumType.STRING)
     private Status status;

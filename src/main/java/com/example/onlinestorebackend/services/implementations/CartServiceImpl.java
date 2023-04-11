@@ -36,9 +36,6 @@ public class CartServiceImpl implements CartService {
         }
 
 
-
-
-
         Cart cart = new Cart();
         cart.setTotalCost(totalCost);
         cart.setTotalQty(totalQty);
