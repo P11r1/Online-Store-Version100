@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import java.util.List;
+
 import static com.example.onlinestorebackend.utils.Constants.Security.*;
 
 /**
@@ -34,14 +36,34 @@ public class DataInit {
 
     @Autowired
     private SubCategoryService subCategoryService;
+    @Autowired
+    private OrderLineService orderLineService;
+//    @Autowired
+//    private OrderService orderService;
 
     @PostConstruct
     public void init(){
-        initProduct();
-        initUser();
-        initAuthor();
-        initCategory();
-        initSubCategory();
+//        initProduct();
+//        initUser();
+//        initAuthor();
+//        initCategory();
+//        initSubCategory();
+//        initOrder();
+
+    }
+
+    private void initOrder() {
+        System.out.println("Starting initializing Order....");
+
+        try {
+            User user = userService.findUserByFullName("1");
+            List<OrderLine> orderLineList = orderLineService.findActiveOrderLineByUser(user);
+
+            Order order = new Order();
+            order.setStatus(Status.ACTIVE);
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -101,8 +123,8 @@ public class DataInit {
 
 
             User user = new User();
-            user.setFullName("admin@finalproject.com");
-            user.setPassword("12345");
+            user.setFullName("1");
+            user.setPassword("1");
             user.setAuthor(author);
             //user.setRole(Role.CUSTOMER);
 

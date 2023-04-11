@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Bahadir Tasli
@@ -26,9 +27,8 @@ public class User extends Auditable<String> implements Serializable {
 
     private String email;
     private String password;
-
-    private String city;
-    private String address;
+    @ManyToMany
+    private List<UserAddress> userAddressList;
 
     private String logoType;
 

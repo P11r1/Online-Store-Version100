@@ -22,14 +22,10 @@ public class Order extends Auditable<String> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-
-    private String deliveryAddress;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<OrderLine> orderLines;
     @OneToOne(cascade = CascadeType.MERGE)
-    private User user;
+    private UserAddress deliveryAddress;
+    @OneToOne(cascade = CascadeType.ALL)
+    private OrderDetails orderDetails;
 
     @Enumerated(EnumType.STRING)
     private Status status;

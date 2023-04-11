@@ -31,5 +31,7 @@ public class OrderDetails extends Auditable<String> implements Serializable {
 
     private float totalPrice;
 
+    private boolean isActive;
+
 
 }
