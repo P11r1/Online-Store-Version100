@@ -21,4 +21,6 @@ public class Cart implements Serializable {
     private List<OrderLine> orderLines;
     private float totalCost;
 
+    private float totalQty;
+
 }

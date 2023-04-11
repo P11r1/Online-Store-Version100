@@ -28,12 +28,20 @@ public class CartServiceImpl implements CartService {
 
         float totalCost = 0;
 
+        float totalQty = 0;
+
         for(OrderLine orderLine: orderLineList) {
             totalCost += orderLine.getProductPrice();
+            totalQty += orderLine.getQtyOfProducts();
         }
+
+
+
+
 
         Cart cart = new Cart();
         cart.setTotalCost(totalCost);
+        cart.setTotalQty(totalQty);
         cart.setOrderLines(orderLineList);
 
         return cart;

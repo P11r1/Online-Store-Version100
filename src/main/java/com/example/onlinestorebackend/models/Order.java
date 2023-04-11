@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Order  extends Auditable<String> implements Serializable {
+public class Order extends Auditable<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,11 +31,6 @@ public class Order  extends Auditable<String> implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
-
-
-
-
 
 
 }
